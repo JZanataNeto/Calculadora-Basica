@@ -10,9 +10,9 @@ Uma calculadora simples desenvolvida em **Java** que executa as oito operações
 *   **Divisão** (/) (com validação para evitar divisão por zero)
 *   **Inversão** (1/x)
 *   **Porcetagem** (%)
-*   **Raiz quadrada** ()
+*   **Raiz quadrada** (√)
 *   **Potência de dois** (x²)
-*   **Inversão de Sinal** ()
+*   **Inversão de Sinal** (±)
 *   **Botão de cancelar entrada** (CE)
 *   **Botão de limpar** (C)
 *   **Botão Backspace** (Back)
@@ -28,7 +28,7 @@ Uma calculadora simples desenvolvida em **Java** que executa as oito operações
 
 1. Clone o repositório:
      
-   git@github.com:JZanataNeto/Calculadora-Basica.git
+   https://git@github.com:JZanataNeto/Calculadora-Basica.git
     
 3. Acesse a pasta do projeto:
    ```bash
@@ -44,5 +44,7 @@ Uma calculadora simples desenvolvida em **Java** que executa as oito operações
    ```
 
 ## 📝 Design e Layout
+<img src="src/main/resources/com/joaozanata/calculadorabasica/img_calculator.png" alt="foto calculadora" width="201" height="315">
+
 
 
