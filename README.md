@@ -27,18 +27,18 @@ Uma calculadora simples desenvolvida em **Java** que executa as oito operações
 ## 📦 Como Executar
 
 1. Clone o repositório:
-   ```bash
-   git clone https://github.com
-   ```
-2. Acesse a pasta do projeto:
+     
+   git@github.com:JZanataNeto/Calculadora-Basica.git
+    
+3. Acesse a pasta do projeto:
    ```bash
    cd nome-do-repositorio
    ```
-3. Compile o arquivo fonte:
+4. Compile o arquivo fonte:
    ```bash
    javac Main.java
    ```
-4. Execute o programa:
+5. Execute o programa:
    ```bash
    java Main
    ```
