@@ -1,103 +1,113 @@
 package com.joaozanata.calculadorabasica;
 
+import com.joaozanata.calculadorabasica.model.TipoOperacao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-import static java.lang.Math.sqrt;
-
 public class CalculatorController {
 
     private double number1;
-    private String operator = "";
+    private TipoOperacao operacaoAtual;
     private boolean newNumber = true;
 
     @FXML
     private TextField tela;
 
+    @FXML
     public void clicagem(ActionEvent event) {
         Button botaoClicado = (Button) event.getSource();
         processadorClique(botaoClicado.getText());
-
     }
 
     public void processadorClique(String valor) {
-        // o dot é tratado separadamente para evitar que seja digitado repetidamente.
-        if(valor.matches("[0-9.]")) {
-            if(valor.equals(".")) {
-                if(newNumber) {
-                    tela.setText("0.");
-                    newNumber = false;
-                } else if (!tela.getText().contains(".")) {
-                    tela.appendText(".");
-                }
-            } else if (newNumber || tela.getText().equals("0")) {
-                tela.setText(valor);
-                newNumber = false;
-            } else {
-                tela.appendText(valor);
-            }
+        if (valor.matches("[0-9.]")) {
+            tratarDigito(valor);
         } else if (valor.equals("±")) {
-            double numeroAtual = Double.parseDouble(tela.getText());
-            if (numeroAtual != 0.0) {
-                tela.setText(String.valueOf(-numeroAtual));
-            }
-        } else if (valor.matches("[+*/%√-]|X²|1/x")) {
-            number1 = Double.parseDouble(tela.getText());
-            operator = valor;
-            newNumber = true;
-        } else if (valor.equals("=")) {
-            if (operator.isEmpty()) return;
-            double number2 = Double.parseDouble(tela.getText());
-            double resultado = calcular(number1, number2, operator);
-            tela.setText(String.valueOf(resultado));
-            operator = "";
-            newNumber = true;
-        } else if (valor.equals("C")) {
-            tela.setText("0");
-            newNumber = true;
-            number1 = 0;
-            operator = "";
-        } else if (valor.equals("CE")) {
-            tela.setText("0");
-            newNumber = true;
-        } else if (valor.equals("Back")) {
-            if (!tela.getText().isEmpty() && !tela.getText().equals("0")) {
-                String newTexto = tela.getText().substring(0, tela.getText().length() - 1);
-                if (newTexto.isEmpty() || newTexto.equals("-")) {
-                    tela.setText("0");
-                    newNumber = true;
-                } else {
-                    tela.setText(newTexto);
-                }
-            }
+            tratarInversaoSinal();
+        }  else if (valor.matches("[√+*/%-]|X²|1/x")) { // Alterado para .matches()
+            tratarOperadores(valor);
+        } else {
+            tratarComandosEspeciais(valor);
         }
     }
 
-    public double calcular(double number1, double number2, String operator) {
-        switch (operator) {
-            case "+":
-                return number1 + number2;
-            case "-":
-                return number1 - number2;
-            case "*":
-                return number1 * number2;
-            case "/":
-                if (number2 == 0) {
-                    return 0;
-                } else {
-                    return number1 / number2;
-                }
-            case "√":
-                return sqrt(number1);
-            case "X²":
-                return number1 * number1;
-            case "1/x":
-                return 1 / number1;
-            case "%":
-                return number1 * number2 / 100;
-            default: return 0;
+    private void tratarDigito(String valor) {
+        if (valor.equals(".")) {
+            if (newNumber) {
+                tela.setText("0.");
+                newNumber = false;
+            } else if (!tela.getText().contains(".")) {
+                tela.appendText(".");
+            }
+        } else if (newNumber || tela.getText().equals("0")) {
+            tela.setText(valor);
+            newNumber = false;
+        } else {
+            tela.appendText(valor);
+        }
+    }
+
+    private void tratarInversaoSinal() {
+        double numeroAtual = Double.parseDouble(tela.getText());
+        if (numeroAtual != 0.0) {
+            tela.setText(String.valueOf(-numeroAtual));
+        }
+    }
+
+    private void tratarOperadores(String valor) {
+        TipoOperacao op = TipoOperacao.obterPorSimbolo(valor);
+        if (op == null) return;
+
+        number1 = Double.parseDouble(tela.getText());
+
+        if (op.precisaSegundoOperando()) {
+            operacaoAtual = op;
+        } else {
+            // Executa na hora se for raiz, quadrado, etc.
+            double resultado = op.calcular(number1, 0);
+            tela.setText(String.valueOf(resultado));
+        }
+        newNumber = true;
+    }
+
+    private void tratarComandosEspeciais(String valor) {
+        switch (valor) {
+            case "=":
+                if (operacaoAtual == null) return;
+                double number2 = Double.parseDouble(tela.getText());
+                double resultado = operacaoAtual.calcular(number1, number2);
+                tela.setText(String.valueOf(resultado));
+                operacaoAtual = null;
+                newNumber = true;
+                break;
+            case "C":
+                tela.setText("0");
+                number1 = 0;
+                operacaoAtual = null;
+                newNumber = true;
+                break;
+            case "CE":
+                tela.setText("0");
+                newNumber = true;
+                break;
+            case "Back":
+                executarBackspace();
+                break;
+        }
+    }
+
+    private void executarBackspace() {
+        if (!tela.getText().isEmpty() && !tela.getText().equals("0")) {
+            String newTexto = tela.getText().substring(0, tela.getText().length() - 1);
+            if (newTexto.isEmpty() || newTexto.equals("-")) {
+                tela.setText("0");
+                newNumber = true;
+            } else {
+                tela.setText(newTexto);
+            }
         }
     }
 }
+
