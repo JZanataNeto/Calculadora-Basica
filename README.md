@@ -49,7 +49,7 @@ Se for **newNumber = false**, o próximo número clicado é anexado ao fim do n�
    ```
 
 ## 📝 Design e Layout
-<img src="src/main/resources/com/joaozanata/calculadorabasica/img_calculator.png" alt="foto calculadora" width="201" height="315">
+<img src="src/main/resources/com/joaozanata/calculadorabasica/calculadora1.png" alt="foto calculadora" width="201" height="315">
 
 
 
