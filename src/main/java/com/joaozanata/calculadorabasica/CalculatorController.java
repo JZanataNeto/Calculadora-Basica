@@ -1,6 +1,7 @@
 package com.joaozanata.calculadorabasica;
 
 import com.joaozanata.calculadorabasica.model.TipoOperacao;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -74,27 +75,25 @@ public class CalculatorController {
 
     private void tratarComandosEspeciais(String valor) {
         switch (valor) {
-            case "=":
+            case "=" -> {
                 if (operacaoAtual == null) return;
                 double number2 = Double.parseDouble(tela.getText());
                 double resultado = operacaoAtual.calcular(number1, number2);
                 tela.setText(String.valueOf(resultado));
                 operacaoAtual = null;
                 newNumber = true;
-                break;
-            case "C":
+            }
+            case "C" -> {
                 tela.setText("0");
                 number1 = 0;
                 operacaoAtual = null;
                 newNumber = true;
-                break;
-            case "CE":
+            }
+            case "CE" -> {
                 tela.setText("0");
                 newNumber = true;
-                break;
-            case "Back":
-                executarBackspace();
-                break;
+            }
+            case "Back" -> executarBackspace();
         }
     }
 

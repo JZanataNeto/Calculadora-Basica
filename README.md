@@ -20,8 +20,8 @@ Uma calculadora simples desenvolvida em **Java** que executa as oito operações
 
 ## 🛠️ Tecnologias
 
-*   **Java** (Versão 26)
-*   **JavaFX** (para desenvolver interfaces gráficas)
+*   **Java** (Versão 25 LTS)
+*   **JavaFX 25** (para desenvolver interfaces gráficas)
 *   **Scene Builder** (para geração do arquivo FXML)
 
 ## Lógicas e validações  
@@ -39,17 +39,14 @@ Se for **newNumber = false**, o próximo número clicado é anexado ao fim do n�
    ```bash
    cd nome-do-repositorio
    ```
-4. Compile o arquivo fonte:
+4. Compile e execute a aplicação com o Maven Wrapper:
    ```bash
-   javac Main.java
+   ./mvnw clean javafx:run
    ```
-5. Execute o programa:
-   ```bash
-   java Main
-   ```
+
+   No Windows, use `mvnw.cmd clean javafx:run`.
 
 ## 📝 Design e Layout
 <img src="src/main/resources/com/joaozanata/calculadorabasica/calculadora-img.png" alt="foto calculadora" width="201" height="315">
-
 
 
